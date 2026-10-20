@@ -1,0 +1,66 @@
+<view class="history-page page-shell">
+  <view class="history-hero">
+    <view class="history-orbit"></view>
+    <view class="history-kicker">LOCAL LISTENING NOTES</view>
+    <view class="history-title">浏览历史</view>
+    <view class="history-sub">留在本机的练习足迹，不需要登录也会记得。</view>
+    <view class="history-meta-row">
+      <view class="history-count">{{count}} <text>条记录</text></view>
+      <view class="clear-history" tt:if="{{count}}" bindtap="onClearTap">清空记录</view>
+    </view>
+  </view>
+
+  <view class="history-body" tt:if="{{!isEmpty}}">
+    <view class="history-group" tt:for="{{groups}}" tt:for-item="group" tt:for-index="groupIndex" tt:key="label">
+      <view class="group-label">
+        <text>{{group.label}}</text>
+        <view class="group-rule"></view>
+      </view>
+
+      <view
+        class="history-card fade-up"
+        tt:for="{{group.items}}"
+        tt:for-item="record"
+        tt:for-index="itemIndex"
+        tt:key="route"
+        data-group-index="{{groupIndex}}"
+        data-item-index="{{itemIndex}}"
+        bindtap="onRecordTap"
+      >
+        <view class="history-cover-wrap">
+          <image
+            class="history-cover"
+            src="{{record.cover}}"
+            mode="aspectFill"
+            lazy-load="{{true}}"
+            data-group-index="{{groupIndex}}"
+            data-item-index="{{itemIndex}}"
+            binderror="onCoverError"
+          />
+          <view class="history-type {{record.contentType == 'video' ? 'video' : ''}}">{{record.typeLabel}}</view>
+          <view class="history-play" tt:if="{{record.contentType == 'video'}}">
+            <view class="history-play-tri"></view>
+          </view>
+        </view>
+        <view class="history-copy">
+          <view class="history-card-title">{{record.title}}</view>
+          <view class="history-card-meta">{{record.metaText}}</view>
+          <view class="history-time">{{record.timeText}}</view>
+        </view>
+        <view class="history-arrow"><view class="chevron"></view></view>
+      </view>
+    </view>
+
+    <view class="history-footer">
+      <view class="footer-line"></view>
+      <text>历史只保存在当前设备 · 最多保留 100 条</text>
+    </view>
+  </view>
+
+  <view class="empty-state" tt:else>
+    <view class="empty-orbit"><text class="empty-mark">迹</text></view>
+    <view class="empty-title">还没有留下脚印</view>
+    <view class="empty-desc">打开一份吉他谱或一段回放，它们会自动记录在这台设备上。</view>
+    <view class="empty-action ghost-btn" bindtap="onGoBrowse">去翻翻吉他谱</view>
+  </view>
+</view>

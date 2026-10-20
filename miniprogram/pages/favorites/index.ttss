@@ -1,0 +1,236 @@
+.favorites-page {
+  background:
+    radial-gradient(circle at 100% 5%, rgba(207, 165, 110, 0.1), transparent 30%),
+    #f7f2e8;
+}
+
+.favorites-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 22rpx 26rpx 0;
+  padding: 34rpx 30rpx 27rpx;
+  color: #f8f1e5;
+  background:
+    radial-gradient(circle at 90% 0, rgba(229, 177, 121, 0.18), transparent 33%),
+    linear-gradient(145deg, #25372d, #1b2922);
+  border-radius: 30rpx;
+  box-shadow: 0 16rpx 38rpx rgba(31, 41, 34, 0.15);
+}
+.favorites-orbit {
+  position: absolute;
+  top: -140rpx;
+  right: -140rpx;
+  width: 390rpx;
+  height: 390rpx;
+  border: 1rpx solid rgba(247, 236, 219, 0.08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 38rpx rgba(247, 236, 219, 0.022);
+}
+.favorites-kicker {
+  color: #d6ad83;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 15rpx;
+  letter-spacing: 4rpx;
+}
+.favorites-title {
+  margin-top: 14rpx;
+  color: #fbf5e9;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 49rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+.favorites-sub {
+  margin-top: 8rpx;
+  color: rgba(245, 234, 219, 0.42);
+  font-size: 21rpx;
+}
+.favorites-meta {
+  margin-top: 24rpx;
+  padding-top: 18rpx;
+  border-top: 1rpx solid rgba(246, 234, 217, 0.09);
+  color: rgba(245, 234, 219, 0.42);
+  font-size: 19rpx;
+}
+
+.guest-favorites {
+  margin: 20rpx 26rpx 0;
+  padding: 52rpx 36rpx;
+  background: #fffdf8;
+  border: 1rpx solid #eadfce;
+  border-radius: 26rpx;
+  box-shadow: 0 12rpx 30rpx rgba(75, 56, 33, 0.05);
+}
+.guest-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.guest-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96rpx;
+  height: 96rpx;
+  margin-bottom: 20rpx;
+  color: #bd8b55;
+  background: #fbf3e6;
+  border: 1rpx solid #eee0cd;
+  border-radius: 50%;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 45rpx;
+}
+.guest-title {
+  color: #2c3931;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 35rpx;
+  font-weight: 600;
+}
+.guest-desc {
+  max-width: 490rpx;
+  margin-top: 10rpx;
+  color: #968c7f;
+  font-size: 22rpx;
+  line-height: 1.85;
+}
+.login-cta {
+  width: 100%;
+  height: 84rpx;
+  margin-top: 28rpx;
+  color: #fff9f0;
+  background: linear-gradient(135deg, #d96539, #c94e27);
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  box-shadow: 0 10rpx 24rpx rgba(181, 72, 34, 0.16);
+}
+.login-cta::after { border: 0; }
+.login-cta-hover { opacity: 0.9; }
+.guest-note {
+  margin-top: 13rpx;
+  color: #b1a699;
+  font-size: 18rpx;
+}
+
+.favorites-list {
+  padding: 20rpx 26rpx 30rpx;
+}
+.favorite-card {
+  display: flex;
+  align-items: center;
+  gap: 17rpx;
+  margin-bottom: 14rpx;
+  padding: 15rpx;
+  background: #fffdf8;
+  border: 1rpx solid #ece2d4;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 20rpx rgba(73, 54, 32, 0.04);
+}
+.fav-cover-wrap {
+  position: relative;
+  flex: 0 0 146rpx;
+  width: 146rpx;
+  height: 108rpx;
+  overflow: hidden;
+  border-radius: 12rpx;
+  background: #e9dfd0;
+}
+.fav-cover {
+  width: 100%;
+  height: 100%;
+}
+.fav-type {
+  position: absolute;
+  top: 7rpx;
+  left: 7rpx;
+  padding: 1rpx 7rpx;
+  color: rgba(255, 248, 238, 0.9);
+  background: rgba(36, 46, 38, 0.55);
+  border-radius: 4rpx;
+  font-size: 14rpx;
+  line-height: 1.6;
+}
+.fav-copy {
+  flex: 1;
+  min-width: 0;
+}
+.fav-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: #2c3931;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 27rpx;
+  font-weight: 600;
+  line-height: 1.42;
+}
+.fav-meta {
+  overflow: hidden;
+  margin-top: 4rpx;
+  color: #a29788;
+  font-size: 18rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.fav-saved {
+  margin-top: 5rpx;
+  color: #c2b7a9;
+  font-size: 16rpx;
+}
+.remove-favorite {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  padding: 5rpx 10rpx;
+  color: #b29c85;
+  background: #faf4eb;
+  border-radius: 6rpx;
+  font-size: 17rpx;
+  line-height: 1.6;
+}
+.favorites-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14rpx;
+  padding: 24rpx 0 16rpx;
+  color: #b3a89a;
+  font-size: 17rpx;
+}
+.tip-rule {
+  width: 38rpx;
+  height: 1rpx;
+  background: #ded4c5;
+}
+
+.favorite-skeleton {
+  display: flex;
+  gap: 17rpx;
+  margin-bottom: 14rpx;
+  padding: 15rpx;
+  background: #fffdf8;
+  border: 1rpx solid #eee4d6;
+  border-radius: 20rpx;
+}
+.favorites-loading {
+  padding: 20rpx 26rpx;
+}
+.fav-cover-sk {
+  flex: 0 0 146rpx;
+  width: 146rpx;
+  height: 108rpx;
+}
+.fav-copy-sk {
+  flex: 1;
+  padding-top: 8rpx;
+}
+.fav-title-sk {
+  width: 78%;
+  height: 27rpx;
+}
+.fav-meta-sk {
+  width: 46%;
+  height: 18rpx;
+  margin-top: 17rpx;
+}

@@ -1,0 +1,82 @@
+<view class="favorites-page page-shell">
+  <view class="favorites-hero">
+    <view class="favorites-orbit"></view>
+    <view class="favorites-kicker">KEPT FOR LATER</view>
+    <view class="favorites-title">我的收藏</view>
+    <view class="favorites-sub">那些想再弹一次、再看一遍的谱子与现场。</view>
+    <view class="favorites-meta" tt:if="{{loggedIn}}">{{count}} 件收藏 · 已与本账号同步</view>
+    <view class="favorites-meta" tt:else>登录后即可查看并同步收藏</view>
+  </view>
+
+  <view class="guest-favorites" tt:if="{{!loggedIn}}">
+    <view class="guest-inner">
+      <view class="guest-icon">☆</view>
+      <view class="guest-title">收藏需要一个身份</view>
+      <view class="guest-desc">使用抖音手机号授权登录后，收藏会跟随账号同步。浏览历史仍保存在本机，无需登录。</view>
+      <button class="login-cta" bindtap="onLoginTap" hover-class="login-cta-hover">登录后查看收藏</button>
+      <view class="guest-note">登录时将调用「抖音手机号授权登录」</view>
+    </view>
+  </view>
+
+  <view class="favorites-loading" tt:elif="{{loading}}">
+    <view class="favorite-skeleton" tt:for="{{skeletonItems}}" tt:key="*this">
+      <view class="skeleton-block fav-cover-sk"></view>
+      <view class="fav-copy-sk">
+        <view class="skeleton-block fav-title-sk"></view>
+        <view class="skeleton-block fav-meta-sk"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="error-block" tt:elif="{{error}}">
+    <view class="error-title">收藏夹暂时打不开</view>
+    <view class="error-message">{{error}}</view>
+    <view class="retry-btn" bindtap="onRetry">重新加载</view>
+  </view>
+
+  <block tt:elif="{{loggedIn}}">
+    <view class="favorites-list" tt:if="{{items.length}}">
+      <view
+        class="favorite-card fade-up"
+        tt:for="{{items}}"
+        tt:key="route"
+        data-index="{{index}}"
+        bindtap="onItemTap"
+      >
+        <view class="fav-cover-wrap">
+          <image
+            class="fav-cover"
+            src="{{item.cover}}"
+            mode="aspectFill"
+            lazy-load="{{true}}"
+            data-index="{{index}}"
+            binderror="onCoverError"
+          />
+          <view class="fav-type">{{item.typeLabel}}</view>
+        </view>
+        <view class="fav-copy">
+          <view class="fav-title">{{item.title}}</view>
+          <view class="fav-meta">{{item.metaText}}</view>
+          <view class="fav-saved">收藏于 {{item.savedText}}</view>
+        </view>
+        <view class="remove-favorite" catchtap="onRemoveTap" data-index="{{index}}">
+          {{item.removing ? '移除中' : '取消'}}
+        </view>
+      </view>
+      <view class="favorites-tip">
+        <view class="tip-rule"></view>
+        <text>收藏会跟随账号 · 点击卡片继续浏览</text>
+        <view class="tip-rule"></view>
+      </view>
+    </view>
+
+    <view class="empty-state" tt:else>
+      <view class="empty-orbit"><text class="empty-mark">藏</text></view>
+      <view class="empty-title">收藏夹还空着</view>
+      <view class="empty-desc">在吉他谱或视频详情页，点一下「收藏」，喜欢的内容就会留在这里。</view>
+      <view class="empty-action ghost-btn" bindtap="onGoScores">去翻翻吉他谱</view>
+    </view>
+  </block>
+
+  <login-sheet id="loginSheet" bind:success="onLoginSuccess"></login-sheet>
+</view>

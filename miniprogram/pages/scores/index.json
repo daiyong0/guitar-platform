@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "吉他谱",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "onReachBottomDistance": 120
+}

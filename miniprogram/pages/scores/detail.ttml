@@ -1,0 +1,234 @@
+<view class="detail-page page-shell">
+  <view class="detail-skeleton" tt:if="{{loading}}">
+    <view class="toolbar-skeleton skeleton-block"></view>
+    <view class="skeleton-block sk-stage"></view>
+    <view class="sk-info">
+      <view class="skeleton-block sk-line-lg"></view>
+      <view class="skeleton-block sk-line-sm"></view>
+      <view class="skeleton-block sk-para"></view>
+    </view>
+  </view>
+
+  <view class="error-block" tt:elif="{{error}}">
+    <view class="error-title">这张谱暂时打不开</view>
+    <view class="error-message">{{error}}</view>
+    <view class="retry-btn" bindtap="onRetry">重新加载</view>
+    <view class="back-text" bindtap="onBackList">返回吉他谱列表</view>
+  </view>
+
+  <block tt:elif="{{item}}">
+    <!-- 顶部操作栏：下载当前页 + 节拍器弹窗入口 -->
+    <view class="reading-toolbar">
+      <view class="reading-toolbar-copy">
+        <view class="reading-eyebrow">GUITAR TAB READER</view>
+        <view class="reading-toolbar-title">谱面阅读<text> · 上下连续滑动</text></view>
+      </view>
+      <view class="reading-actions">
+        <button
+          class="reading-tool-button"
+          bindtap="onDownloadTap"
+          disabled="{{downloadLoading}}"
+          hover-class="reading-tool-hover"
+        >
+          <view class="toolbar-icon download-icon">
+            <view class="download-arrow"></view>
+            <view class="download-tray"></view>
+          </view>
+          <text>{{downloadLoading ? '保存中' : '下载本页'}}</text>
+        </button>
+
+        <button
+          class="reading-tool-button metronome-tool {{metronomeOn ? 'is-running' : ''}}"
+          bindtap="openMetronomePanel"
+          hover-class="reading-tool-hover"
+        >
+          <view class="metronome-glyph">
+            <view class="metronome-stem"></view>
+            <view class="metronome-weight"></view>
+            <view class="metronome-base"></view>
+          </view>
+          <text>节拍器</text>
+          <view class="metronome-live-dot" tt:if="{{metronomeOn}}"></view>
+        </button>
+      </view>
+    </view>
+
+    <view class="sheet-stage fade-up">
+      <view class="stage-noise"></view>
+      <view class="stage-head">
+        <view class="stage-tag">{{item.tags[0] || '吉他谱'}}</view>
+        <view class="stage-page">第 {{activePage}} / {{totalPages}} 页</view>
+      </view>
+
+      <view class="normal-score-frame">
+        <scroll-view
+          class="normal-score-scroll"
+          scroll-y="{{!metronomePanelVisible}}"
+          scroll-top="{{readingScrollTop}}"
+          show-scrollbar="{{false}}"
+          enhanced="{{true}}"
+          bindscroll="onSheetScroll"
+        >
+          <image
+            class="normal-sheet-image"
+            tt:for="{{imageUrls}}"
+            tt:for-item="img"
+            tt:for-index="imgIndex"
+            tt:key="*this"
+            src="{{img}}"
+            mode="widthFix"
+            lazy-load="{{imgIndex > 1}}"
+            data-index="{{imgIndex}}"
+            bindtap="onPreviewImage"
+            bindload="onSheetImageLoad"
+          />
+        </scroll-view>
+        <view class="scroll-fade scroll-fade-top"></view>
+        <view class="scroll-fade scroll-fade-bottom"></view>
+        <view class="scroll-side-hint">上下滑动</view>
+      </view>
+
+      <view class="reading-progress-track">
+        <view class="reading-progress-fill" style="width: {{readPercent}}%;"></view>
+      </view>
+
+      <view class="stage-foot">
+        <view class="stage-hint">点击单页可双指放大 · 左右切换其他谱面</view>
+        <view class="stage-progress-text">{{readPercent}}%</view>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="info-kicker">GUITAR TAB · {{publishedText}}</view>
+      <view class="info-title">{{item.title}}</view>
+
+      <view class="info-tags">
+        <view class="info-tag" tt:for="{{item.tags}}" tt:key="*this">{{item}}</view>
+      </view>
+
+      <view class="info-stats">
+        <view class="stat-cell">
+          <text class="stat-num">{{totalPages}}</text>
+          <text class="stat-label">张谱面</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-cell">
+          <text class="stat-num">{{viewText}}</text>
+          <text class="stat-label">次浏览</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-cell">
+          <text class="stat-num">6</text>
+          <text class="stat-label">根琴弦</text>
+        </view>
+      </view>
+
+      <view class="info-divider"></view>
+      <view class="info-desc-label">曲目说明</view>
+      <view class="info-desc">{{item.description || '运营还没有补充曲目说明，先从谱面开始练习吧。'}}</view>
+
+      <view class="practice-note">
+        <view class="note-mark">练</view>
+        <view class="note-copy">
+          <view class="note-title">慢一点，再慢一点</view>
+          <view class="note-desc">先分段确认指法，再跟节拍器合奏。谱面仅用于学习交流。</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-actions safe-bottom">
+      <button
+        class="favorite-button {{isFavorited ? 'is-active' : ''}}"
+        bindtap="onFavoriteTap"
+        loading="{{favoriteLoading}}"
+        disabled="{{favoriteLoading}}"
+        hover-class="action-hover"
+      >
+        <text class="favorite-star">{{isFavorited ? '★' : '☆'}}</text>
+        <text class="favorite-text">{{isFavorited ? '已收藏' : '收藏'}}</text>
+      </button>
+      <button class="share-button" open-type="share" hover-class="action-hover">
+        <view class="share-glyph">
+          <view class="share-arrow-up"></view>
+          <view class="share-line-one"></view>
+          <view class="share-line-two"></view>
+          <view class="share-bowl"></view>
+        </view>
+        <text>分享这份谱</text>
+      </button>
+    </view>
+  </block>
+
+  <!-- 节拍器底部弹窗：关闭弹窗不停止播放，离开页面才销毁 -->
+  <view class="metronome-popup" tt:if="{{metronomePanelVisible}}">
+    <view class="metronome-mask" bindtap="closeMetronomePanel" catchtouchmove="blockTouchMove"></view>
+    <view class="metronome-sheet safe-bottom" catchtap="noop" catchtouchmove="blockTouchMove">
+      <view class="sheet-handle"></view>
+      <view class="metronome-sheet-head">
+        <view>
+          <view class="metro-eyebrow">METRONOME · KEEP TIME</view>
+          <view class="metro-sheet-title">节拍器</view>
+        </view>
+        <view class="metro-sheet-close" bindtap="closeMetronomePanel">收起</view>
+      </view>
+
+      <view class="metro-popup-body">
+        <view class="bpm-orbit {{metronomeOn ? 'is-running' : ''}}" style="animation-duration: {{beatDuration}}ms;">
+          <view class="bpm-orbit-inner">
+            <view class="bpm-pulse"></view>
+            <!-- 点击 BPM 数字调用 tt.showModal({ editable: true }) 键盘输入 40-200 -->
+            <view class="bpm-touch-target" bindtap="openBpmInput" hover-class="bpm-touch-hover">
+              <text class="bpm-number">{{bpm}}</text>
+              <text class="bpm-label">BPM</text>
+              <text class="bpm-edit-tip">点击数字精确输入</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="bpm-adjust-row">
+          <button
+            class="bpm-adjust-button {{bpmCanDec ? '' : 'is-disabled'}}"
+            bindtap="onBpmMinus"
+            disabled="{{!bpmCanDec}}"
+            hover-class="bpm-button-hover"
+          >−</button>
+          <view class="bpm-adjust-copy">
+            <text class="bpm-adjust-title">{{bpm}} BPM</text>
+            <text class="bpm-adjust-hint">每次 ±1 · 点击上方数字可键盘输入</text>
+          </view>
+          <button
+            class="bpm-adjust-button {{bpmCanInc ? '' : 'is-disabled'}}"
+            bindtap="onBpmPlus"
+            disabled="{{!bpmCanInc}}"
+            hover-class="bpm-button-hover"
+          >+</button>
+        </view>
+
+        <view class="metro-switch-row">
+          <view class="switch-copy">
+            <view class="switch-title">{{metronomeOn ? '节拍器播放中' : '开启节拍器'}}</view>
+            <view class="switch-desc">{{metronomeOn ? '收起弹窗后会继续发声' : '开启后在练琴时持续打拍'}}</view>
+          </view>
+          <switch
+            checked="{{metronomeOn}}"
+            color="#D95B31"
+            bindchange="onMetronomeToggle"
+          />
+        </view>
+
+        <view class="metro-source-warning" tt:if="{{!metronomeConfigured}}">
+          节拍器音频尚未配置。请在 miniprogram/utils/metronome.js 中填写 clickAudioUrl（mp3 网络地址）。
+        </view>
+        <view class="metro-source-tip" tt:else>
+          关闭弹窗不会停止节拍器；只有关闭上方开关或离开本页时才会停止。
+        </view>
+
+        <button class="metro-done-button" bindtap="closeMetronomePanel" hover-class="metro-done-hover">
+          完成 · 保留当前节拍
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <login-sheet id="loginSheet" bind:success="onLoginSuccess"></login-sheet>
+</view>

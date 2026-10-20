@@ -1,0 +1,128 @@
+<view class="mine-page page-shell">
+  <view class="profile-hero">
+    <view class="hero-texture">
+      <view class="texture-line t1"></view>
+      <view class="texture-line t2"></view>
+      <view class="texture-line t3"></view>
+      <view class="texture-line t4"></view>
+      <view class="texture-line t5"></view>
+    </view>
+    <view class="hero-ring"></view>
+
+    <view class="profile-top">
+      <view class="profile-avatar {{loggedIn ? '' : 'guest'}}">
+        <image
+          class="avatar-image"
+          tt:if="{{loggedIn && user.avatar}}"
+          src="{{user.avatar}}"
+          mode="aspectFill"
+        />
+        <text tt:else>{{avatarText}}</text>
+      </view>
+
+      <view class="profile-copy">
+        <view class="profile-name-row">
+          <text class="profile-name">{{loggedIn ? (user.nickname || '吉他手') : '未登录的听众'}}</text>
+          <text class="profile-status">{{loggedIn ? '已登录' : 'GUEST'}}</text>
+        </view>
+        <view class="profile-phone" tt:if="{{loggedIn}}">{{user.phoneMasked}}</view>
+        <view class="profile-phone" tt:else>浏览无需登录，收藏时才需要身份</view>
+        <view class="profile-motto">把每一次拨弦，留在自己的练习簿里。</view>
+      </view>
+    </view>
+
+    <view class="profile-stats">
+      <view class="profile-stat">
+        <text class="profile-stat-value">{{historyCount}}</text>
+        <text class="profile-stat-label">浏览历史</text>
+      </view>
+      <view class="profile-stat-divider"></view>
+      <view class="profile-stat">
+        <text class="profile-stat-value">{{favoriteCountText}}</text>
+        <text class="profile-stat-label">收藏内容</text>
+      </view>
+      <view class="profile-stat-divider"></view>
+      <view class="profile-stat">
+        <text class="profile-stat-value">{{loggedIn ? 'SYNC' : 'LOCAL'}}</text>
+        <text class="profile-stat-label">{{loggedIn ? '收藏已同步' : '历史存本机'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="mine-content">
+    <view class="guest-card" tt:if="{{!loggedIn}}">
+      <view class="guest-card-top">
+        <view>
+          <view class="guest-kicker">ONE TAP TO KEEP</view>
+          <view class="guest-title">登录后，把喜欢留下来</view>
+        </view>
+        <view class="guest-mark">弦</view>
+      </view>
+      <view class="guest-desc">收藏吉他谱与视频回放，下一次打开时不必再找。浏览历史仍然保存在本机，不登录也能使用。</view>
+
+      <button
+        class="phone-login-btn"
+        open-type="getPhoneNumber"
+        bindgetphonenumber="onGetPhone"
+        loading="{{loginLoading}}"
+        disabled="{{loginLoading}}"
+        hover-class="phone-btn-hover"
+      >
+        抖音手机号授权登录
+      </button>
+
+      <view class="login-note" tt:if="{{isMock}}">
+        开发模式：当前为固定测试用户登录，不会调用真实手机号换取接口。上线并开通手机号能力后，服务端切换到 real 即可。
+      </view>
+      <view class="login-error" tt:if="{{loginError}}" bindtap="onRetryLogin">{{loginError}} · 点此重试</view>
+      <view class="privacy-note">手机号仅用于账号识别，并以加密形式存储。</view>
+    </view>
+
+    <view class="menu-card">
+      <view class="menu-item" bindtap="onHistoryTap" hover-class="menu-hover">
+        <view class="menu-icon history-icon">
+          <view class="clock-face"></view>
+          <view class="clock-hand hour"></view>
+          <view class="clock-hand minute"></view>
+        </view>
+        <view class="menu-copy">
+          <view class="menu-title">浏览历史</view>
+          <view class="menu-desc">{{lastHistoryTitle ? '最近：' + lastHistoryTitle : '看过的谱子和回放会留在这里'}}</view>
+        </view>
+        <view class="menu-count" tt:if="{{historyCount}}">{{historyCount}}</view>
+        <view class="chevron menu-chevron"></view>
+      </view>
+
+      <view class="menu-divider"></view>
+
+      <view class="menu-item" bindtap="onFavoritesTap" hover-class="menu-hover">
+        <view class="menu-icon favorite-icon">
+          <text class="star-shape">{{loggedIn ? '★' : '☆'}}</text>
+        </view>
+        <view class="menu-copy">
+          <view class="menu-title">我的收藏</view>
+          <view class="menu-desc">{{loggedIn ? '收藏的谱面与现场回放' : '登录后同步收藏内容'}}</view>
+        </view>
+        <view class="menu-count" tt:if="{{loggedIn}}">{{favoriteCount}}</view>
+        <view class="chevron menu-chevron"></view>
+      </view>
+    </view>
+
+    <view class="note-card">
+      <view class="note-index">NOTE / 01</view>
+      <view class="note-card-title">练习是一场很长的回声</view>
+      <view class="note-card-desc">不急着把每一小节弹对。先让手熟悉琴弦，再让耳朵记住声音。弦间会一直把这些谱子和现场留在这里。</view>
+      <view class="note-sign">— 弦间</view>
+    </view>
+
+    <view class="logout-button" tt:if="{{loggedIn}}" bindtap="onLogoutTap">退出登录</view>
+
+    <view class="mine-footer">
+      <view class="footer-rule"></view>
+      <text>弦间 · 自建行为分析，数据属于创作者与听众</text>
+      <text class="footer-version">v1.0</text>
+    </view>
+  </view>
+
+  <login-sheet id="loginSheet" bind:success="onLoginSuccess"></login-sheet>
+</view>

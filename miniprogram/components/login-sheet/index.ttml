@@ -1,0 +1,49 @@
+<view class="sheet-root" tt:if="{{visible}}">
+  <view class="sheet-mask" bindtap="close"></view>
+  <view class="sheet-panel safe-bottom" catchtap="noop">
+    <view class="sheet-handle"></view>
+    <view class="sheet-close" bindtap="close" aria-role="button" aria-label="关闭登录弹窗">
+      <view class="close-line line-a"></view>
+      <view class="close-line line-b"></view>
+    </view>
+
+    <view class="sheet-brand">
+      <view class="sheet-mark">弦</view>
+      <text class="sheet-brand-name">{{appName}}</text>
+    </view>
+
+    <view class="sheet-title">登录后，把喜欢的声音留下</view>
+    <view class="sheet-desc">收藏吉他谱与视频回放，让下一次练习更快找到熟悉的谱面。</view>
+
+    <view class="sheet-benefits">
+      <view class="benefit-item">
+        <view class="benefit-dot"></view>
+        <text>收藏谱面与直播回放</text>
+      </view>
+      <view class="benefit-item">
+        <view class="benefit-dot"></view>
+        <text>登录状态跨设备可用</text>
+      </view>
+    </view>
+
+    <button
+      class="phone-button"
+      open-type="getPhoneNumber"
+      bindgetphonenumber="onGetPhone"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+      hover-class="phone-button-hover"
+    >
+      抖音手机号授权登录
+    </button>
+
+    <view class="sheet-error" tt:if="{{error}}">{{error}}</view>
+
+    <view class="mock-hint" tt:if="{{isMock}}">
+      开发模式提示：当前使用固定测试用户，不会调用真实手机号接口。正式上线并开通手机号能力后，服务端切换为 real 即可使用真实授权。
+    </view>
+    <view class="privacy-hint">授权即表示你同意使用手机号完成账号登录，手机号仅用于账号识别并以加密形式存储。</view>
+
+    <view class="skip-button" bindtap="close">暂不登录，继续浏览</view>
+  </view>
+</view>

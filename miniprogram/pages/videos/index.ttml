@@ -1,0 +1,109 @@
+<view class="videos-page page-shell">
+  <view class="video-hero">
+    <view class="hero-ring"></view>
+    <view class="hero-copy">
+      <view class="eyebrow">LIVE REPLAY · 弦间</view>
+      <view class="video-hero-title">再听一次，</view>
+      <view class="video-hero-title accent">弦上的呼吸。</view>
+      <view class="video-hero-sub">现场、教学与幕后，所有值得回放的瞬间。</view>
+    </view>
+    <view class="hero-play">
+      <view class="hero-play-tri"></view>
+    </view>
+    <view class="hero-caption">ARCHIVE / {{total}} REPLAYS</view>
+  </view>
+
+  <scroll-view class="category-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}">
+    <view class="category-row">
+      <view
+        class="category-chip {{activeCategory == item ? 'is-active' : ''}}"
+        tt:for="{{categories}}"
+        tt:key="*this"
+        data-category="{{item}}"
+        bindtap="onCategoryTap"
+      >
+        {{item}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="videos-head">
+    <view>
+      <view class="videos-label">LATEST ARCHIVE</view>
+      <view class="videos-title">回放放映室</view>
+    </view>
+    <view class="videos-count">共 {{total}} 条</view>
+  </view>
+
+  <view class="video-list" tt:if="{{!loading && list.length}}">
+    <view
+      class="video-card fade-up tap-feedback"
+      tt:for="{{list}}"
+      tt:key="id"
+      data-index="{{index}}"
+      bindtap="onVideoTap"
+    >
+      <view class="video-cover-wrap">
+        <image
+          class="video-cover"
+          src="{{item.cover}}"
+          mode="aspectFill"
+          lazy-load="{{true}}"
+          data-index="{{index}}"
+          binderror="onCoverError"
+        />
+        <view class="video-cover-shade"></view>
+        <view class="video-category">{{item.categoryText}}</view>
+        <view class="video-time">{{item.durationText}}</view>
+        <view class="video-play">
+          <view class="play-tri"></view>
+        </view>
+        <view class="cover-play-line" tt:if="{{index == 0}}">NOW SHOWING</view>
+      </view>
+      <view class="video-card-body">
+        <view class="video-title">{{item.title}}</view>
+        <view class="video-meta">
+          <text>{{item.viewText}} 次播放</text>
+          <view class="meta-dot"></view>
+          <text>{{item.publishedText}}</text>
+          <view class="video-arrow"><view class="chevron"></view></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="video-skeleton-wrap" tt:if="{{loading}}">
+    <view class="video-skeleton" tt:for="{{skeletons}}" tt:key="*this">
+      <view class="skeleton-block sk-video-cover"></view>
+      <view class="sk-video-copy">
+        <view class="skeleton-block sk-video-title"></view>
+        <view class="skeleton-block sk-video-meta"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="error-block" tt:elif="{{error}}">
+    <view class="error-title">放映机暂时卡住了</view>
+    <view class="error-message">{{error}}</view>
+    <view class="retry-btn" bindtap="onRetry">重新加载</view>
+  </view>
+
+  <view class="empty-state" tt:elif="{{!list.length}}">
+    <view class="empty-orbit"><text class="empty-mark">映</text></view>
+    <view class="empty-title">还没有可回放的现场</view>
+    <view class="empty-desc">运营上传视频回放后，这里会亮起银幕。</view>
+  </view>
+
+  <view class="video-load-state" tt:if="{{list.length}}">
+    <view class="loading-line" tt:if="{{loadingMore}}">
+      <view class="loading-spinner"></view>
+      <text>正在装载下一段回放…</text>
+    </view>
+    <view class="video-end" tt:elif="{{!hasMore}}">
+      <view class="end-line"></view>
+      <text>THE END · 待下一场 Live</text>
+      <view class="end-line"></view>
+    </view>
+    <view class="video-more" tt:else>继续上滑，还有现场</view>
+  </view>
+</view>

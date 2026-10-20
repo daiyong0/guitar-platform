@@ -1,0 +1,326 @@
+/* =========================================================
+   弦间 · 全局样式
+   warm paper / pine ink / guitar orange
+   ========================================================= */
+page {
+  min-height: 100%;
+  color: #1f2b25;
+  background: #f7f2e8;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view, text, image, button, input, scroll-view, swiper, video {
+  box-sizing: border-box;
+}
+
+image {
+  display: block;
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: center;
+}
+button::after {
+  border: 0;
+}
+
+.page-shell {
+  min-height: 100vh;
+  padding-bottom: 44rpx;
+}
+
+.page-inner {
+  padding: 0 28rpx;
+}
+
+.eyebrow {
+  color: #d25c33;
+  font-size: 18rpx;
+  font-weight: 600;
+  letter-spacing: 5rpx;
+  line-height: 1.4;
+}
+
+.display-title {
+  color: #1d2a24;
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 48rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+  line-height: 1.35;
+}
+
+.muted {
+  color: #8b8378;
+}
+
+.faint {
+  color: #aaa092;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3rpx 12rpx;
+  color: #8c7b68;
+  background: #f7f0e5;
+  border: 1rpx solid #ece1d2;
+  border-radius: 8rpx;
+  font-size: 18rpx;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.tag.accent {
+  color: #c4542c;
+  background: #faece3;
+  border-color: #f3d8c9;
+}
+.tag.ink {
+  color: #52645a;
+  background: #edf1ec;
+  border-color: #dfe7e0;
+}
+
+.card {
+  background: #fffdf8;
+  border: 1rpx solid #eae1d3;
+  border-radius: 26rpx;
+  box-shadow: 0 10rpx 32rpx rgba(74, 54, 31, 0.045);
+}
+
+.hairline {
+  height: 1rpx;
+  background: #eee6da;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 22rpx;
+}
+.section-head .title {
+  color: #243229;
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 34rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+.section-head .hint {
+  color: #9b9184;
+  font-size: 21rpx;
+}
+
+.primary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88rpx;
+  color: #fff9f0;
+  background: linear-gradient(135deg, #dc6a3e, #c9522a);
+  border-radius: 18rpx;
+  font-size: 27rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+  box-shadow: 0 10rpx 26rpx rgba(184, 74, 35, 0.2);
+}
+.primary-btn[disabled] {
+  color: rgba(255, 255, 255, 0.7);
+  background: #cda894;
+  box-shadow: none;
+}
+.primary-btn.hover {
+  opacity: 0.9;
+  transform: translateY(1rpx);
+}
+
+.ghost-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+  color: #4e6157;
+  background: #fffdf8;
+  border: 1rpx solid #e7ddcf;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.chevron {
+  width: 13rpx;
+  height: 13rpx;
+  border-top: 3rpx solid currentColor;
+  border-right: 3rpx solid currentColor;
+  transform: rotate(45deg);
+}
+
+.dot {
+  width: 7rpx;
+  height: 7rpx;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 110rpx 40rpx;
+  text-align: center;
+}
+.empty-orbit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 128rpx;
+  height: 128rpx;
+  margin-bottom: 30rpx;
+  color: #ba9473;
+  border: 1rpx solid #ded0bd;
+  border-radius: 50%;
+  background: #fbf6ed;
+}
+.empty-orbit::after {
+  content: "";
+  position: absolute;
+  top: 15rpx;
+  right: 15rpx;
+  bottom: 15rpx;
+  left: 15rpx;
+  border: 1rpx dashed #e3d6c5;
+  border-radius: 50%;
+}
+.empty-mark {
+  position: relative;
+  z-index: 1;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 44rpx;
+  font-weight: 600;
+}
+.empty-state .empty-title {
+  color: #4c5a51;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.empty-state .empty-desc {
+  max-width: 460rpx;
+  margin-top: 10rpx;
+  color: #a49a8d;
+  font-size: 23rpx;
+  line-height: 1.8;
+}
+.empty-state .empty-action {
+  min-width: 240rpx;
+  margin-top: 32rpx;
+}
+
+.error-block {
+  margin: 28rpx;
+  padding: 48rpx 36rpx;
+  text-align: center;
+  background: #fffaf4;
+  border: 1rpx solid #f0dcd0;
+  border-radius: 24rpx;
+}
+.error-block .error-title {
+  color: #8f4d34;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.error-block .error-message {
+  margin-top: 10rpx;
+  color: #a78d7d;
+  font-size: 23rpx;
+  line-height: 1.75;
+}
+.error-block .retry-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 64rpx;
+  margin-top: 24rpx;
+  padding: 0 34rpx;
+  color: #b74f2b;
+  background: #fff;
+  border: 1rpx solid #ecc8b7;
+  border-radius: 32rpx;
+  font-size: 23rpx;
+}
+
+.skeleton-block {
+  position: relative;
+  overflow: hidden;
+  background: #ece4d7;
+  border-radius: 12rpx;
+}
+.skeleton-block::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 70%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.48), transparent);
+  animation: skeleton-sweep 1.4s infinite;
+}
+@keyframes skeleton-sweep {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(190%); }
+}
+
+.loading-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 28rpx;
+  color: #a59b8d;
+  font-size: 22rpx;
+}
+.loading-spinner {
+  width: 22rpx;
+  height: 22rpx;
+  border: 3rpx solid #e5d8c8;
+  border-top-color: #cf6a42;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.safe-bottom {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.fade-up {
+  animation: fade-up 0.36s ease both;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tap-feedback {
+  transition: opacity 0.15s, transform 0.15s;
+}
+.tap-feedback:active {
+  opacity: 0.82;
+  transform: scale(0.986);
+}

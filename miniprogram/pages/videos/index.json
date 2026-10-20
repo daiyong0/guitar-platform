@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "视频回放",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "onReachBottomDistance": 120
+}

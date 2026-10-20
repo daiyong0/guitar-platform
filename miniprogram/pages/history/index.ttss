@@ -1,0 +1,215 @@
+.history-page {
+  background:
+    radial-gradient(circle at 0% 5%, rgba(208, 166, 111, 0.1), transparent 30%),
+    #f7f2e8;
+}
+
+.history-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 22rpx 26rpx 0;
+  padding: 35rpx 30rpx 27rpx;
+  color: #f8f1e5;
+  background:
+    radial-gradient(circle at 91% 2%, rgba(227, 175, 120, 0.18), transparent 32%),
+    linear-gradient(145deg, #25372d, #1c2a23);
+  border-radius: 30rpx;
+  box-shadow: 0 16rpx 38rpx rgba(31, 41, 34, 0.15);
+}
+.history-orbit {
+  position: absolute;
+  top: -130rpx;
+  right: -130rpx;
+  width: 380rpx;
+  height: 380rpx;
+  border: 1rpx solid rgba(247, 236, 219, 0.08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 38rpx rgba(247, 236, 219, 0.022);
+}
+.history-kicker {
+  color: #d6ad83;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 15rpx;
+  letter-spacing: 4rpx;
+}
+.history-title {
+  margin-top: 14rpx;
+  color: #fbf5e9;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 49rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+.history-sub {
+  margin-top: 8rpx;
+  color: rgba(245, 234, 219, 0.42);
+  font-size: 21rpx;
+}
+.history-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 26rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid rgba(246, 234, 217, 0.09);
+}
+.history-count {
+  color: #f2dfc8;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 29rpx;
+  font-weight: 600;
+}
+.history-count text {
+  margin-left: 5rpx;
+  color: rgba(245, 234, 219, 0.4);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  font-size: 18rpx;
+  font-weight: 400;
+}
+.clear-history {
+  padding: 5rpx 15rpx;
+  color: #d7b28d;
+  border: 1rpx solid rgba(224, 186, 146, 0.23);
+  border-radius: 7rpx;
+  font-size: 19rpx;
+}
+
+.history-body {
+  padding: 18rpx 26rpx 30rpx;
+}
+.history-group {
+  margin-bottom: 16rpx;
+}
+.group-label {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 12rpx 4rpx 16rpx;
+}
+.group-label text {
+  color: #8d7764;
+  font-size: 22rpx;
+  font-weight: 500;
+  letter-spacing: 1rpx;
+}
+.group-rule {
+  flex: 1;
+  height: 1rpx;
+  background: #e4dacb;
+}
+.history-card {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  margin-bottom: 14rpx;
+  padding: 14rpx;
+  background: #fffdf8;
+  border: 1rpx solid #ece2d4;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 20rpx rgba(73, 54, 32, 0.04);
+}
+.history-cover-wrap {
+  position: relative;
+  flex: 0 0 154rpx;
+  width: 154rpx;
+  height: 104rpx;
+  overflow: hidden;
+  border-radius: 12rpx;
+  background: #e8dfd1;
+}
+.history-cover {
+  width: 100%;
+  height: 100%;
+}
+.history-type {
+  position: absolute;
+  top: 8rpx;
+  left: 8rpx;
+  padding: 1rpx 8rpx;
+  color: rgba(255, 248, 238, 0.9);
+  background: rgba(37, 47, 39, 0.55);
+  border-radius: 4rpx;
+  font-size: 15rpx;
+  line-height: 1.6;
+}
+.history-type.video {
+  background: rgba(86, 65, 45, 0.62);
+}
+.history-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45rpx;
+  height: 45rpx;
+  margin-top: -23rpx;
+  margin-left: -23rpx;
+  background: rgba(255, 249, 240, 0.82);
+  border-radius: 50%;
+}
+.history-play-tri {
+  width: 0;
+  height: 0;
+  margin-left: 4rpx;
+  border-top: 7rpx solid transparent;
+  border-bottom: 7rpx solid transparent;
+  border-left: 11rpx solid #314238;
+}
+.history-copy {
+  flex: 1;
+  min-width: 0;
+}
+.history-card-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: #2c3931;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 27rpx;
+  font-weight: 600;
+  line-height: 1.42;
+}
+.history-card-meta {
+  overflow: hidden;
+  margin-top: 4rpx;
+  color: #a29788;
+  font-size: 18rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.history-time {
+  margin-top: 5rpx;
+  color: #c1b6a8;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 16rpx;
+}
+.history-arrow {
+  flex: 0 0 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #c2b5a5;
+}
+.history-arrow .chevron {
+  width: 9rpx;
+  height: 9rpx;
+  border-width: 2rpx;
+}
+
+.history-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13rpx;
+  padding: 26rpx 0 20rpx;
+  color: #b4aa9c;
+  font-size: 18rpx;
+}
+.footer-line {
+  width: 44rpx;
+  height: 1rpx;
+  background: #ded4c5;
+}

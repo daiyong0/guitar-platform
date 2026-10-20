@@ -1,0 +1,154 @@
+<view class="scores-page page-shell">
+  <view class="hero">
+    <view class="hero-orbit orbit-one"></view>
+    <view class="hero-orbit orbit-two"></view>
+    <view class="hero-strings">
+      <view class="hero-string hs1"></view>
+      <view class="hero-string hs2"></view>
+      <view class="hero-string hs3"></view>
+      <view class="hero-string hs4"></view>
+      <view class="hero-string hs5"></view>
+      <view class="hero-string hs6"></view>
+    </view>
+
+    <view class="hero-topline">
+      <view class="brand-line">
+        <view class="brand-dot"></view>
+        <text>弦间谱库</text>
+      </view>
+      <text class="hero-no">TAB / 01</text>
+    </view>
+
+    <view class="hero-title">把喜欢的歌，</view>
+    <view class="hero-title hero-title-accent">弹给自己听。</view>
+    <view class="hero-subline">六线谱 · 弹唱 · 指弹 · 持续收录</view>
+
+    <view class="hero-search">
+      <view class="search-icon">
+        <view class="search-circle"></view>
+        <view class="search-handle"></view>
+      </view>
+      <input
+        class="hero-search-input"
+        value="{{keyword}}"
+        type="text"
+        placeholder="搜一首想弹的歌"
+        placeholder-class="search-placeholder"
+        confirm-type="search"
+        maxlength="60"
+        bindinput="onSearchInput"
+        bindfocus="onSearchFocus"
+        bindblur="onSearchBlur"
+        bindconfirm="onSearchConfirm"
+      />
+      <view class="search-clear" tt:if="{{keyword}}" bindtap="onClearKeyword">×</view>
+      <view class="search-submit" bindtap="onSearchTap">搜索</view>
+    </view>
+  </view>
+
+  <view class="filter-wrap">
+    <scroll-view class="filter-scroll" scroll-x="{{true}}" show-scrollbar="{{false}}" enhanced="{{true}}">
+      <view class="filter-row">
+        <view
+          class="filter-chip {{activeTag == item ? 'is-active' : ''}}"
+          tt:for="{{tags}}"
+          tt:key="*this"
+          data-tag="{{item}}"
+          bindtap="onTagTap"
+        >
+          {{item}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="library-head">
+    <view>
+      <view class="library-label">CURATED TABS</view>
+      <view class="library-title">今日谱单</view>
+    </view>
+    <view class="library-meta" tt:if="{{!loading}}">共 {{total}} 份</view>
+  </view>
+
+  <view class="result-tip" tt:if="{{keyword && !loading}}">
+    关于「{{keyword}}」的搜索结果
+  </view>
+
+  <view class="score-skeleton-grid" tt:if="{{loading}}">
+    <view class="score-skeleton" tt:for="{{skeletons}}" tt:key="*this">
+      <view class="skeleton-block sk-cover"></view>
+      <view class="sk-body">
+        <view class="skeleton-block sk-title"></view>
+        <view class="skeleton-block sk-meta"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="error-block" tt:elif="{{error}}">
+    <view class="error-title">谱库暂时没有回应</view>
+    <view class="error-message">{{error}}</view>
+    <view class="retry-btn" bindtap="onRetry">重新加载</view>
+  </view>
+
+  <block tt:else>
+    <view class="empty-state" tt:if="{{!list.length}}">
+      <view class="empty-orbit"><text class="empty-mark">谱</text></view>
+      <view class="empty-title">{{keyword ? '没有找到这份谱' : '这里还很安静'}}</view>
+      <view class="empty-desc">{{keyword ? '换一个关键词，或试试「全部」标签。' : '运营上传第一份吉他谱后，它会出现在这里。'}}</view>
+      <view class="empty-action ghost-btn" tt:if="{{keyword}}" bindtap="onClearKeyword">清除搜索</view>
+      <view class="empty-action ghost-btn" tt:else bindtap="onRetry">刷新看看</view>
+    </view>
+
+    <view class="score-grid" tt:else>
+      <view
+        class="score-card fade-up tap-feedback"
+        tt:for="{{list}}"
+        tt:key="id"
+        data-index="{{index}}"
+        bindtap="onCardTap"
+      >
+        <view class="cover-wrap">
+          <image
+            class="score-cover"
+            src="{{item.cover}}"
+            mode="aspectFill"
+            lazy-load="{{true}}"
+            data-index="{{index}}"
+            binderror="onCoverError"
+          />
+          <view class="cover-shade"></view>
+          <view class="cover-tag">{{item.primaryTag}}</view>
+          <view class="cover-pages">{{item.coverPagesText}}</view>
+          <view class="cover-strings">
+            <view class="cover-line cl1"></view>
+            <view class="cover-line cl2"></view>
+            <view class="cover-line cl3"></view>
+          </view>
+        </view>
+        <view class="score-card-body">
+          <view class="score-card-title">{{item.title}}</view>
+          <view class="score-card-tags">
+            <text class="mini-tag" tt:for="{{item.cardTags}}" tt:for-item="tag" tt:key="*this">{{tag}}</text>
+          </view>
+          <view class="score-card-meta">
+            <text class="meta-views">{{item.viewText}} 浏览</text>
+            <view class="meta-arrow"><view class="chevron"></view></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="load-state" tt:if="{{list.length}}">
+      <view class="loading-line" tt:if="{{loadingMore}}">
+        <view class="loading-spinner"></view>
+        <text>正在翻下一页谱子…</text>
+      </view>
+      <view class="end-line" tt:elif="{{!hasMore}}">
+        <view class="end-rule"></view>
+        <text>弦止于此 · 慢慢练</text>
+        <view class="end-rule"></view>
+      </view>
+      <view class="more-hint" tt:else>继续上滑，发现更多</view>
+    </view>
+  </block>
+</view>

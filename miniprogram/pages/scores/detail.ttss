@@ -1,0 +1,925 @@
+.detail-page {
+  padding-bottom: 178rpx;
+  background:
+    radial-gradient(circle at 0% 7%, rgba(210, 166, 110, 0.1), transparent 29%),
+    #f7f2e8;
+}
+
+/* =========================
+   顶部操作栏
+   ========================= */
+.reading-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin: 22rpx 24rpx 0;
+}
+.reading-toolbar-copy {
+  min-width: 0;
+}
+.reading-eyebrow {
+  color: #bd8d64;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 15rpx;
+  letter-spacing: 3rpx;
+}
+.reading-toolbar-title {
+  margin-top: 4rpx;
+  overflow: hidden;
+  color: #28362d;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 31rpx;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.reading-toolbar-title text {
+  color: #9e8f7c;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  font-size: 18rpx;
+  font-weight: 400;
+}
+.reading-actions {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  flex: 0 0 auto;
+}
+.reading-tool-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7rpx;
+  height: 62rpx;
+  padding: 0 15rpx;
+  color: #5a6157;
+  background: rgba(255, 253, 248, 0.84);
+  border: 1rpx solid #e8dece;
+  border-radius: 12rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 5rpx 14rpx rgba(63, 48, 30, 0.04);
+}
+.reading-tool-button[disabled] {
+  opacity: 0.55;
+}
+.reading-tool-hover {
+  opacity: 0.8;
+}
+.metronome-tool.is-running {
+  color: #b54f2d;
+  background: #fdf0e6;
+  border-color: #edccb8;
+}
+.metronome-live-dot {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 7rpx;
+  height: 7rpx;
+  border-radius: 50%;
+  background: #d96a3f;
+  box-shadow: 0 0 0 4rpx rgba(217, 106, 63, 0.12);
+}
+.toolbar-icon {
+  position: relative;
+  width: 23rpx;
+  height: 23rpx;
+  flex: 0 0 23rpx;
+}
+.download-arrow {
+  position: absolute;
+  top: 0;
+  left: 10rpx;
+  width: 2rpx;
+  height: 13rpx;
+  background: currentColor;
+}
+.download-arrow::after {
+  content: "";
+  position: absolute;
+  right: -4rpx;
+  bottom: 0;
+  width: 7rpx;
+  height: 7rpx;
+  border-right: 2rpx solid currentColor;
+  border-bottom: 2rpx solid currentColor;
+  transform: rotate(45deg);
+}
+.download-tray {
+  position: absolute;
+  right: 1rpx;
+  bottom: 0;
+  left: 1rpx;
+  height: 7rpx;
+  border: 2rpx solid currentColor;
+  border-top: 0;
+  border-radius: 0 0 5rpx 5rpx;
+}
+.metronome-glyph {
+  position: relative;
+  flex: 0 0 23rpx;
+  width: 23rpx;
+  height: 23rpx;
+}
+.metronome-stem {
+  position: absolute;
+  top: 2rpx;
+  left: 11rpx;
+  width: 2rpx;
+  height: 16rpx;
+  background: currentColor;
+  transform-origin: center bottom;
+  transform: rotate(18deg);
+}
+.metronome-weight {
+  position: absolute;
+  top: 4rpx;
+  right: 3rpx;
+  width: 6rpx;
+  height: 6rpx;
+  background: currentColor;
+  border-radius: 2rpx;
+}
+.metronome-base {
+  position: absolute;
+  right: 2rpx;
+  bottom: 1rpx;
+  left: 2rpx;
+  height: 2rpx;
+  border-radius: 2rpx;
+  background: currentColor;
+}
+.metronome-base::after {
+  content: "";
+  position: absolute;
+  right: 7rpx;
+  bottom: 0;
+  width: 2rpx;
+  height: 7rpx;
+  background: currentColor;
+}
+
+/* =========================
+   竖向谱面舞台
+   ========================= */
+.sheet-stage {
+  position: relative;
+  overflow: hidden;
+  margin: 18rpx 24rpx 0;
+  padding: 24rpx 20rpx 18rpx;
+  background:
+    radial-gradient(circle at 91% 4%, rgba(222, 173, 118, 0.14), transparent 30%),
+    linear-gradient(150deg, #24362c, #1c2923);
+  border-radius: 30rpx;
+  box-shadow: 0 18rpx 42rpx rgba(33, 43, 36, 0.17);
+}
+.stage-noise {
+  position: absolute;
+  top: -90rpx;
+  right: -90rpx;
+  width: 310rpx;
+  height: 310rpx;
+  border: 1rpx solid rgba(250, 241, 227, 0.08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 34rpx rgba(250, 241, 227, 0.025);
+  pointer-events: none;
+}
+.stage-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rpx 4rpx 16rpx;
+}
+.stage-tag {
+  padding: 5rpx 16rpx;
+  color: #f2cba4;
+  background: rgba(246, 226, 200, 0.08);
+  border: 1rpx solid rgba(246, 226, 200, 0.13);
+  border-radius: 8rpx;
+  font-size: 19rpx;
+  letter-spacing: 1rpx;
+}
+.stage-page {
+  color: rgba(246, 236, 220, 0.55);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 19rpx;
+  letter-spacing: 1rpx;
+}
+.normal-score-frame {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  width: 100%;
+  height: 920rpx;
+  border-radius: 14rpx;
+  background: #fbf6ec;
+}
+.normal-score-scroll {
+  width: 100%;
+  height: 920rpx;
+  background: #fffcf6;
+}
+.normal-sheet-image {
+  display: block;
+  width: 100%;
+  background: #fffcf6;
+}
+.scroll-fade {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  height: 44rpx;
+  pointer-events: none;
+}
+.scroll-fade-top {
+  top: 0;
+  background: linear-gradient(180deg, rgba(251, 246, 236, 0.9), rgba(251, 246, 236, 0));
+}
+.scroll-fade-bottom {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(27, 37, 31, 0.18), rgba(251, 246, 236, 0));
+}
+.scroll-side-hint {
+  position: absolute;
+  right: 12rpx;
+  bottom: 14rpx;
+  z-index: 4;
+  padding: 3rpx 10rpx;
+  color: rgba(255, 250, 242, 0.76);
+  background: rgba(29, 41, 34, 0.55);
+  border-radius: 20rpx;
+  font-size: 16rpx;
+  line-height: 1.6;
+  pointer-events: none;
+}
+.reading-progress-track {
+  position: relative;
+  z-index: 2;
+  height: 4rpx;
+  margin: 16rpx 4rpx 0;
+  overflow: hidden;
+  background: rgba(245, 234, 217, 0.13);
+  border-radius: 4rpx;
+}
+.reading-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #b8855d, #e3b58c);
+  border-radius: 4rpx;
+  transition: width 0.16s linear;
+}
+.stage-foot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  padding: 14rpx 4rpx 2rpx;
+}
+.stage-hint {
+  color: rgba(246, 235, 218, 0.38);
+  font-size: 18rpx;
+  letter-spacing: 0.5rpx;
+}
+.stage-progress-text {
+  color: rgba(246, 235, 218, 0.45);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 17rpx;
+}
+
+/* =========================
+   曲目信息
+   ========================= */
+.info-card {
+  position: relative;
+  margin: 22rpx 24rpx 0;
+  padding: 32rpx 32rpx 28rpx;
+  background: #fffdf8;
+  border: 1rpx solid #eae0d2;
+  border-radius: 26rpx;
+  box-shadow: 0 10rpx 30rpx rgba(68, 53, 35, 0.045);
+}
+.info-kicker {
+  color: #bd8d64;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 17rpx;
+  letter-spacing: 3rpx;
+}
+.info-title {
+  margin-top: 8rpx;
+  color: #233129;
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+  font-size: 46rpx;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 1rpx;
+}
+.info-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-top: 18rpx;
+}
+.info-tag {
+  padding: 4rpx 15rpx;
+  color: #9a755b;
+  background: #faf1e5;
+  border: 1rpx solid #efe1d1;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+}
+.info-stats {
+  display: flex;
+  align-items: center;
+  margin-top: 26rpx;
+  padding: 22rpx 8rpx;
+  background: #faf6ef;
+  border-radius: 16rpx;
+}
+.stat-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rpx;
+}
+.stat-num {
+  color: #33463b;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+.stat-label {
+  color: #a79c8e;
+  font-size: 19rpx;
+}
+.stat-divider {
+  width: 1rpx;
+  height: 36rpx;
+  background: #e8dfd3;
+}
+.info-divider {
+  height: 1rpx;
+  margin: 28rpx 0 24rpx;
+  background: #efe8dc;
+}
+.info-desc-label {
+  color: #b58b67;
+  font-size: 19rpx;
+  letter-spacing: 3rpx;
+}
+.info-desc {
+  margin-top: 10rpx;
+  color: #73695e;
+  font-size: 25rpx;
+  line-height: 1.95;
+}
+.practice-note {
+  display: flex;
+  gap: 18rpx;
+  margin-top: 28rpx;
+  padding: 22rpx;
+  background: #f5f7f2;
+  border: 1rpx solid #e4eae2;
+  border-radius: 16rpx;
+}
+.note-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 50rpx;
+  width: 50rpx;
+  height: 50rpx;
+  color: #5d7365;
+  background: #e8eee7;
+  border-radius: 12rpx;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 24rpx;
+}
+.note-copy {
+  flex: 1;
+}
+.note-title {
+  color: #596a5e;
+  font-size: 23rpx;
+  font-weight: 600;
+}
+.note-desc {
+  margin-top: 3rpx;
+  color: #9aa294;
+  font-size: 20rpx;
+  line-height: 1.7;
+}
+
+/* =========================
+   底部操作栏
+   ========================= */
+.bottom-actions {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  padding: 16rpx 26rpx 18rpx;
+  background: rgba(252, 248, 241, 0.97);
+  border-top: 1rpx solid #ebe1d3;
+  box-shadow: 0 -10rpx 30rpx rgba(66, 52, 35, 0.06);
+}
+.favorite-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  flex: 0 0 210rpx;
+  height: 84rpx;
+  color: #7a6f62;
+  background: #fffaf3;
+  border: 1rpx solid #e8dccd;
+  border-radius: 18rpx;
+  font-size: 25rpx;
+}
+.favorite-button.is-active {
+  color: #bd7040;
+  background: #fbf0e5;
+  border-color: #eccfb9;
+}
+.favorite-star {
+  color: #c89355;
+  font-size: 30rpx;
+  line-height: 1;
+}
+.favorite-text {
+  font-weight: 500;
+}
+.share-button {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  height: 84rpx;
+  color: #fff9f0;
+  background: linear-gradient(135deg, #d96539, #c94e27);
+  border-radius: 18rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  box-shadow: 0 10rpx 24rpx rgba(181, 72, 34, 0.18);
+}
+.action-hover {
+  opacity: 0.9;
+}
+.share-glyph {
+  position: relative;
+  width: 28rpx;
+  height: 32rpx;
+}
+.share-arrow-up {
+  position: absolute;
+  top: 0;
+  left: 12rpx;
+  width: 2rpx;
+  height: 19rpx;
+  background: #fff9f0;
+}
+.share-arrow-up::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -6rpx;
+  width: 12rpx;
+  height: 12rpx;
+  border-top: 2rpx solid #fff9f0;
+  border-left: 2rpx solid #fff9f0;
+  transform: rotate(45deg);
+}
+.share-bowl {
+  position: absolute;
+  bottom: 0;
+  left: 2rpx;
+  width: 24rpx;
+  height: 16rpx;
+  border: 2rpx solid #fff9f0;
+  border-top: 0;
+  border-radius: 0 0 7rpx 7rpx;
+}
+.share-line-one {
+  position: absolute;
+  top: 24rpx;
+  left: 0;
+  width: 8rpx;
+  height: 2rpx;
+  background: #fff9f0;
+}
+.share-line-two {
+  position: absolute;
+  top: 24rpx;
+  right: 0;
+  width: 8rpx;
+  height: 2rpx;
+  background: #fff9f0;
+}
+
+/* =========================
+   节拍器底部弹窗
+   ========================= */
+.metronome-popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 980;
+}
+.metronome-mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(19, 28, 23, 0.54);
+  touch-action: none;
+  animation: metro-mask-in 0.2s ease both;
+}
+@keyframes metro-mask-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.metronome-sheet {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-height: 92vh;
+  padding: 16rpx 34rpx 30rpx;
+  padding-bottom: calc(30rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(30rpx + env(safe-area-inset-bottom));
+  overflow: hidden;
+  background: #fffdf8;
+  border-radius: 34rpx 34rpx 0 0;
+  box-shadow: 0 -20rpx 60rpx rgba(33, 28, 20, 0.17);
+  touch-action: none;
+  animation: metro-sheet-in 0.28s cubic-bezier(0.22, 0.8, 0.32, 1) both;
+}
+@keyframes metro-sheet-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.sheet-handle {
+  width: 58rpx;
+  height: 7rpx;
+  margin: 0 auto 22rpx;
+  border-radius: 7rpx;
+  background: #e4d9ca;
+}
+.metronome-sheet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+.metro-eyebrow {
+  color: #bd8d64;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 15rpx;
+  letter-spacing: 3rpx;
+}
+.metro-sheet-title {
+  margin-top: 4rpx;
+  color: #27352c;
+  font-family: "Songti SC", "STSong", serif;
+  font-size: 38rpx;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.metro-sheet-close {
+  padding: 5rpx 13rpx;
+  color: #928575;
+  background: #f7f0e5;
+  border-radius: 8rpx;
+  font-size: 19rpx;
+  line-height: 1.6;
+}
+.metro-popup-body {
+  margin-top: 14rpx;
+}
+.bpm-orbit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 264rpx;
+  height: 264rpx;
+  margin: 10rpx auto 0;
+  color: #fbf4e8;
+  background:
+    radial-gradient(circle at 35% 24%, rgba(238, 190, 141, 0.2), transparent 35%),
+    linear-gradient(145deg, #2b3f33, #1c2a23);
+  border: 1rpx solid rgba(245, 231, 210, 0.12);
+  border-radius: 50%;
+  box-shadow: 0 0 0 14rpx rgba(39, 54, 45, 0.035);
+}
+.bpm-orbit.is-running {
+  animation-name: bpm-beat;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+@keyframes bpm-beat {
+  0% {
+    box-shadow: 0 0 0 0 rgba(221, 108, 62, 0.34), 0 0 0 14rpx rgba(39, 54, 45, 0.035);
+  }
+  18% {
+    box-shadow: 0 0 0 16rpx rgba(221, 108, 62, 0.1), 0 0 0 14rpx rgba(39, 54, 45, 0.035);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(221, 108, 62, 0), 0 0 0 14rpx rgba(39, 54, 45, 0.035);
+  }
+}
+.bpm-orbit-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.bpm-pulse {
+  position: absolute;
+  top: 35rpx;
+  right: 35rpx;
+  bottom: 35rpx;
+  left: 35rpx;
+  border: 1rpx solid rgba(231, 178, 129, 0.18);
+  border-radius: 50%;
+}
+.bpm-touch-target {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 190rpx;
+  padding: 16rpx 8rpx;
+  border-radius: 20rpx;
+}
+.bpm-touch-hover {
+  background: rgba(255, 248, 237, 0.06);
+}
+.bpm-number {
+  color: #fff8ed;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 78rpx;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -3rpx;
+}
+.bpm-label {
+  margin-top: 7rpx;
+  color: rgba(242, 223, 201, 0.5);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 16rpx;
+  letter-spacing: 3rpx;
+}
+.bpm-edit-tip {
+  margin-top: 6rpx;
+  color: rgba(242, 223, 201, 0.5);
+  font-size: 16rpx;
+}
+.bpm-adjust-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-top: 30rpx;
+}
+.bpm-adjust-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 78rpx;
+  width: 78rpx;
+  height: 78rpx;
+  padding: 0;
+  color: #46584d;
+  background: #f6efe3;
+  border: 1rpx solid #e7dac8;
+  border-radius: 50%;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 42rpx;
+  line-height: 1;
+}
+.bpm-adjust-button.is-disabled {
+  color: #c9bdad;
+  background: #fbf8f2;
+}
+.bpm-button-hover {
+  background: #f0e5d6;
+}
+.bpm-adjust-copy {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+.bpm-adjust-title {
+  display: block;
+  color: #2f3d33;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 31rpx;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.bpm-adjust-hint {
+  display: block;
+  margin-top: 3rpx;
+  color: #a89b8b;
+  font-size: 18rpx;
+}
+.metro-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin-top: 26rpx;
+  padding: 22rpx 22rpx;
+  background: #faf6ef;
+  border-radius: 16rpx;
+}
+.switch-copy {
+  min-width: 0;
+}
+.switch-title {
+  color: #38473d;
+  font-size: 25rpx;
+  font-weight: 600;
+}
+.switch-desc {
+  margin-top: 3rpx;
+  color: #a39788;
+  font-size: 18rpx;
+}
+.metro-source-warning {
+  margin-top: 18rpx;
+  padding: 13rpx 16rpx;
+  color: #9c704a;
+  background: #fcf1e4;
+  border: 1rpx solid #f0ddc8;
+  border-radius: 9rpx;
+  font-size: 18rpx;
+  line-height: 1.7;
+}
+.metro-source-tip {
+  margin-top: 15rpx;
+  color: #a99d8f;
+  font-size: 18rpx;
+  line-height: 1.65;
+  text-align: center;
+}
+.metro-done-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 82rpx;
+  margin-top: 22rpx;
+  color: #fff9f0;
+  background: linear-gradient(135deg, #d96539, #c94e27);
+  border-radius: 16rpx;
+  font-size: 25rpx;
+  font-weight: 600;
+  box-shadow: 0 9rpx 22rpx rgba(181, 72, 34, 0.16);
+}
+.metro-done-hover {
+  opacity: 0.9;
+}
+
+/* =========================
+   加载骨架与错误
+   ========================= */
+.detail-skeleton {
+  padding: 26rpx 24rpx;
+}
+.toolbar-skeleton {
+  width: 100%;
+  height: 70rpx;
+  margin-bottom: 18rpx;
+}
+.sk-stage {
+  width: 100%;
+  height: 1080rpx;
+  border-radius: 30rpx;
+}
+.sk-info {
+  padding: 36rpx 8rpx;
+}
+.sk-line-lg {
+  width: 65%;
+  height: 46rpx;
+}
+.sk-line-sm {
+  width: 35%;
+  height: 22rpx;
+  margin-top: 18rpx;
+}
+.sk-para {
+  width: 100%;
+  height: 100rpx;
+  margin-top: 28rpx;
+}
+.back-text {
+  margin-top: 18rpx;
+  color: #a78d7c;
+  font-size: 22rpx;
+}
+
+@media (max-width: 360px) {
+  .reading-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12rpx;
+  }
+  .reading-actions {
+    width: 100%;
+  }
+  .reading-tool-button {
+    flex: 1;
+  }
+  .normal-score-frame,
+  .normal-score-scroll {
+    height: 86vh;
+  }
+  .bpm-orbit {
+    width: 235rpx;
+    height: 235rpx;
+  }
+  .bpm-number {
+    font-size: 70rpx;
+  }
+}
+
+/* 低矮屏幕：弹窗禁止内部滚动（catchtouchmove），因此压缩关键间距，保证控制项完整可见。 */
+@media (max-height: 640px) {
+  .metronome-sheet {
+    padding: 10rpx 28rpx 18rpx;
+    padding-bottom: calc(18rpx + constant(safe-area-inset-bottom));
+    padding-bottom: calc(18rpx + env(safe-area-inset-bottom));
+  }
+  .sheet-handle {
+    margin-bottom: 12rpx;
+  }
+  .metro-sheet-title {
+    font-size: 34rpx;
+  }
+  .metro-popup-body {
+    margin-top: 6rpx;
+  }
+  .bpm-orbit {
+    width: 210rpx;
+    height: 210rpx;
+    margin-top: 4rpx;
+  }
+  .bpm-pulse {
+    top: 28rpx;
+    right: 28rpx;
+    bottom: 28rpx;
+    left: 28rpx;
+  }
+  .bpm-touch-target {
+    padding: 8rpx;
+  }
+  .bpm-number {
+    font-size: 62rpx;
+  }
+  .bpm-edit-tip {
+    margin-top: 3rpx;
+  }
+  .bpm-adjust-row {
+    margin-top: 16rpx;
+  }
+  .bpm-adjust-button {
+    flex-basis: 66rpx;
+    width: 66rpx;
+    height: 66rpx;
+  }
+  .metro-switch-row {
+    margin-top: 16rpx;
+    padding: 14rpx 18rpx;
+  }
+  .metro-source-warning,
+  .metro-source-tip {
+    margin-top: 9rpx;
+    line-height: 1.5;
+  }
+  .metro-done-button {
+    height: 70rpx;
+    margin-top: 14rpx;
+  }
+}

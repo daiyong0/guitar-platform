@@ -1,0 +1,110 @@
+<view class="video-detail-page page-shell">
+  <view class="detail-skeleton" tt:if="{{loading}}">
+    <view class="skeleton-block sk-player"></view>
+    <view class="sk-detail-info">
+      <view class="skeleton-block sk-line-lg"></view>
+      <view class="skeleton-block sk-line-sm"></view>
+      <view class="skeleton-block sk-para"></view>
+    </view>
+  </view>
+
+  <view class="error-block" tt:elif="{{error}}">
+    <view class="error-title">这场回放暂时找不到</view>
+    <view class="error-message">{{error}}</view>
+    <view class="retry-btn" bindtap="onRetry">重新加载</view>
+    <view class="back-text" bindtap="onBackList">返回视频列表</view>
+  </view>
+
+  <block tt:elif="{{item}}">
+    <view class="player-stage fade-up">
+      <view class="stage-top">
+        <view class="stage-label">LIVE ARCHIVE</view>
+        <view class="stage-meta">{{durationText}} · {{publishedText}}</view>
+      </view>
+      <view class="video-frame">
+        <video
+          id="replayPlayer"
+          class="replay-video"
+          src="{{item.videoPreviewUrl}}"
+          poster="{{item.coverPreviewUrl}}"
+          controls="{{true}}"
+          show-center-play-btn="{{true}}"
+          enable-progress-gesture="{{true}}"
+          object-fit="contain"
+          autoplay="{{false}}"
+          loop="{{false}}"
+          bindplay="onVideoPlay"
+          bindpause="onVideoPause"
+          bindended="onVideoEnded"
+          bindtimeupdate="onTimeUpdate"
+        ></video>
+        <view class="video-top-shade"></view>
+        <view class="video-channel">弦间 · REPLAY CHANNEL</view>
+      </view>
+      <view class="stage-bottom">
+        <view class="stage-pill">{{item.category || '视频回放'}}</view>
+        <view class="stage-views">{{viewText}} 次播放</view>
+      </view>
+    </view>
+
+    <view class="replay-info-card">
+      <view class="replay-kicker">AFTER THE LIVE</view>
+      <view class="replay-title">{{item.title}}</view>
+      <view class="replay-meta-row">
+        <view class="replay-meta-item">
+          <text class="meta-value">{{durationText}}</text>
+          <text class="meta-key">回放时长</text>
+        </view>
+        <view class="meta-divider"></view>
+        <view class="replay-meta-item">
+          <text class="meta-value">{{viewText}}</text>
+          <text class="meta-key">累计播放</text>
+        </view>
+        <view class="meta-divider"></view>
+        <view class="replay-meta-item">
+          <text class="meta-value">{{item.category || '未分类'}}</text>
+          <text class="meta-key">内容分类</text>
+        </view>
+      </view>
+
+      <view class="replay-divider"></view>
+      <view class="replay-desc-title">关于这场回放</view>
+      <view class="replay-desc">
+        这一段记录来自弦间的直播与练习现场。戴上耳机，跟着画面重新走一遍指法与节奏；如果某一小节卡住了，不妨暂停、倒退，再弹一次。
+      </view>
+
+      <view class="replay-tip">
+        <view class="tip-index">01</view>
+        <view class="tip-copy">
+          <view class="tip-title">观看提示</view>
+          <view class="tip-desc">播放、暂停与完播行为会用于改进后续内容，播放数据仅做匿名统计。</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-actions safe-bottom">
+      <button
+        class="favorite-button {{isFavorited ? 'is-active' : ''}}"
+        bindtap="onFavoriteTap"
+        loading="{{favoriteLoading}}"
+        disabled="{{favoriteLoading}}"
+        hover-class="action-hover"
+      >
+        <text class="favorite-star">{{isFavorited ? '★' : '☆'}}</text>
+        <text class="favorite-text">{{isFavorited ? '已收藏' : '收藏'}}</text>
+      </button>
+      <button class="share-button" open-type="share" hover-class="action-hover">
+        <view class="share-icon">
+          <view class="share-wing left"></view>
+          <view class="share-wing right"></view>
+          <view class="share-node top"></view>
+          <view class="share-node bottom-left"></view>
+          <view class="share-node bottom-right"></view>
+        </view>
+        <text>分享这场回放</text>
+      </button>
+    </view>
+  </block>
+
+  <login-sheet id="loginSheet" bind:success="onLoginSuccess"></login-sheet>
+</view>
